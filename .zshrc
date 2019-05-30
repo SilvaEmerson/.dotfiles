@@ -1,25 +1,25 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+#export PATH=$HOME/bin:/usr/local/bin:$PATH
 cat ~/cat_sleeping.txt
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/emerson/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="spaceship"
+ZSH_THEME="gnzh"
 
-SPACESHIP_PYENV_SHOW="always"
-SPACESHIP_PYENV_COLOR="blue"
-SPACESHIP_BATTERY_SHOW="always"
-SPACESHIP_USER_SHOW="always"
+#SPACESHIP_PYENV_SHOW="always"
+#SPACESHIP_PYENV_COLOR="blue"
+#SPACESHIP_BATTERY_SHOW="always"
+#SPACESHIP_USER_SHOW="always"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
 # If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+#ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -122,9 +122,12 @@ export SDKMAN_DIR="/home/emerson/.sdkman"
 [[ -s "/home/emerson/.sdkman/bin/sdkman-init.sh" ]] && source "/home/emerson/.sdkman/bin/sdkman-init.sh"
 fpath=($fpath "/home/emerson/.zfunctions")
 
-  # Set Spaceship ZSH as a prompt
-  autoload -U promptinit; promptinit
-  prompt spaceship
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 bindkey -v
-cat cat_wake.txt
+cat ~/cat_wake.txt
+echo ".-$ whoami\n|\n'-> "$(whoami)
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /home/emerson/Documents/Projects/ElectronDemo/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /home/emerson/Documents/Projects/ElectronDemo/node_modules/tabtab/.completions/electron-forge.zsh
+
+

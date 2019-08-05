@@ -1,5 +1,5 @@
-# If you come from bash you might have to change your $PATH.
-#export PATH=$HOME/bin:/usr/local/bin:$PATH
+    # If you come from bash you might have to change your $PATH.
+    #export PATH=$HOME/bin:/usr/local/bin:$PATH
 cat ~/cat_sleeping.txt
 
 # Path to your oh-my-zsh installation.
@@ -9,12 +9,12 @@ export ZSH=$HOME/.oh-my-zsh
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="gnzh"
+ZSH_THEME="spaceship"
 
-#SPACESHIP_PYENV_SHOW="always"
-#SPACESHIP_PYENV_COLOR="blue"
-#SPACESHIP_BATTERY_SHOW="always"
-#SPACESHIP_USER_SHOW="always"
+SPACESHIP_PYENV_SHOW="always"
+SPACESHIP_PYENV_COLOR="blue"
+SPACESHIP_BATTERY_SHOW="always"
+SPACESHIP_USER_SHOW="always"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -71,14 +71,16 @@ plugins=(
 	pip
 	yarn
 	npm
-	battery
-	brew
 	archlinux
 	pyenv
 	node
 	git
+    fast-syntax-highlighting
 	zsh-autosuggestions
+    zsh-completions
 )
+
+autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,6 +101,7 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 export PATH="/home/emerson/.pyenv/bin:$PATH"
+export PATH="/home/emerson/.local/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PATH="$(yarn global bin):$PATH"
@@ -114,13 +117,35 @@ export PATH="$(yarn global bin):$PATH"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias gwtwo="lutris lutris:rungameid/6"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export PATH="/home/emerson/.gem/ruby/2.6.0/bin:$PATH"
 export PATH=~/.npm-global/bin:$PATH
-export SDKMAN_DIR="/home/emerson/.sdkman"
-[[ -s "/home/emerson/.sdkman/bin/sdkman-init.sh" ]] && source "/home/emerson/.sdkman/bin/sdkman-init.sh"
+export PATH="/home/emerson/.deno/bin:$PATH"
+export PATH="/usr/lib/jvm/java-12-openjdk/bin/:$PATH"
+export PATH="$PATH:$HOME/.cargo/bin"
 fpath=($fpath "/home/emerson/.zfunctions")
+
+
+# Set Proxy
+function setproxy() {
+    export {http,https}_proxy="proxy.ufal.br:3128"
+}
+
+# Unset Proxy
+function unsetproxy() {
+    unset {http,https,ftp}_proxy
+}
+
+function checkupdates(){
+    upgradablePackages=`sudo pacman -Qu | wc -l`
+
+    if [ "$upgradablePackages" -gt 0 ]; then
+        echo "You need to update some packages :)"
+    else
+        echo "System up to date"
+    fi
+}
 
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 bindkey -v
@@ -129,5 +154,3 @@ echo ".-$ whoami\n|\n'-> "$(whoami)
 # tabtab source for electron-forge package
 # uninstall by removing these lines or running `tabtab uninstall electron-forge`
 [[ -f /home/emerson/Documents/Projects/ElectronDemo/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /home/emerson/Documents/Projects/ElectronDemo/node_modules/tabtab/.completions/electron-forge.zsh
-
-

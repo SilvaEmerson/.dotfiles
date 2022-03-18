@@ -120,7 +120,7 @@ export PATH="$(yarn global bin):$PATH"
 alias gwtwo="lutris lutris:rungameid/6"
 
 # clean ALL Docker images with <none> tags
-alias docker-clean-dangling-images='docker rmi -f (docker images -f "dangling=true" -aq)'
+alias docker-clean-dangling-images='docker rmi -f $(docker images -f "dangling=true" -aq)'
 
 export PATH="/home/emerson/.gem/ruby/2.6.0/bin:$PATH"
 export PATH=~/.npm-global/bin:$PATH

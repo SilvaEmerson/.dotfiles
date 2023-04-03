@@ -10,6 +10,12 @@ with pkgs;
   firefox
   brave
   nushell
+  fish
   wasmer
   wasmtime
+  postman
+  dbeaver
+  vault
+  aws-vault
+  awscli2
 ]

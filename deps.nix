@@ -18,4 +18,6 @@ with pkgs;
   vault
   aws-vault
   awscli2
+  neovim
+  emacs
 ]

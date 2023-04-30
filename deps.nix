@@ -1,3 +1,5 @@
+# To install following dependencies run:
+# `nix-env -f deps.nix -i`
 let
   pkgs = import <nixpkgs> { };
 in
@@ -22,4 +24,5 @@ with pkgs;
   emacs
   podman
   podman-compose
+  asdf-vm
 ]

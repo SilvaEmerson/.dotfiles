@@ -20,4 +20,6 @@ with pkgs;
   awscli2
   neovim
   emacs
+  podman
+  podman-compose
 ]

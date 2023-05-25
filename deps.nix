@@ -1,5 +1,7 @@
-# To install following dependencies run:
+# To install following dependencies, in the legacy Nix versions, run:
 # `nix-env -f deps.nix -i`
+# or in the new Nix versions:
+# `nix profile install -f deps.nix`
 let
   pkgs = import <nixpkgs> { };
 in

@@ -25,4 +25,6 @@ with pkgs;
   podman
   podman-compose
   asdf-vm
+  redis
+  sqlc
 ]

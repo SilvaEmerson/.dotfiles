@@ -27,4 +27,5 @@ with pkgs;
   asdf-vm
   redis
   sqlc
+  delve
 ]

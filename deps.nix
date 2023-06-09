@@ -30,4 +30,5 @@ with pkgs;
   redis
   sqlc
   delve
+  ripgrep
 ]

@@ -30,4 +30,7 @@ with pkgs;
   redis
   sqlc
   delve
+  fzf
+  bat
+  difftastic
 ]

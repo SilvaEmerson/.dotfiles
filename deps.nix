@@ -31,4 +31,7 @@ with pkgs;
   sqlc
   delve
   ripgrep
+  fzf
+  bat
+  difftastic
 ]

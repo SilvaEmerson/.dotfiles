@@ -107,8 +107,22 @@ function vmi
     set --local allowed_versions (asdf list-all $lang)
     set --local versions (asdf list-all $lang | fzf --tac --no-sort --multi)
     if contains $versions $allowed_versions
-      for version in (echo $versions)
-        asdf install $lang $version
+      for _version in $versions
+        asdf install $lang $_version
+      end
+    end
+  end
+end
+
+function nixi -d "Install a nix package"
+  set pkg $argv[1]
+
+  if ! test -z $pkg
+    set --local versions (nix-env -qa $pkg | fzf --tac --no-sort --multi)
+    if ! test -z $versions
+      for _version in $versions
+        echo "Installing $_version"
+        nix-env -i $_version
       end
     end
   end

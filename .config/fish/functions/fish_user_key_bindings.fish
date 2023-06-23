@@ -104,8 +104,8 @@ function vmi
   end
 
   if ! test -z $lang
-    set --local allowed_versions (asdf list-all $lang)
-    set --local versions (asdf list-all $lang | fzf --tac --no-sort --multi)
+    set -l allowed_versions (asdf list-all $lang)
+    set -l versions (echo $allowed_versions | sed 's/[[:blank:]]/\n/g' | fzf --tac --no-sort --multi)
     if contains $versions $allowed_versions
       for _version in $versions
         asdf install $lang $_version
@@ -118,7 +118,7 @@ function nixi -d "Install a nix package"
   set pkg $argv[1]
 
   if ! test -z $pkg
-    set --local versions (nix-env -qa $pkg | fzf --tac --no-sort --multi)
+    set -l versions (nix-env -qa $pkg | fzf --tac --no-sort --multi)
     if ! test -z $versions
       for _version in $versions
         echo "Installing $_version"
@@ -126,4 +126,39 @@ function nixi -d "Install a nix package"
       end
     end
   end
+end
+
+function gvs -d "Get Vault Secret"
+  if test command -v jq &> /dev/null -eq 1
+    echo "JQ could not be found. Make sure to install (https://jqlang.github.io/jq/download)"
+    return 
+  end
+
+  if test command -v fzf &> /dev/null -eq 1
+    echo "FZF could not be found. Make sure to install (https://github.com/junegunn/fzf#installation)"
+    return 
+  end
+
+  if test -z $VAULT_TOKEN; or test -z $VAULT_ADDR
+    echo "
+    Make sure to set your Vault env vars.
+    'export VAULT_TOKEN=<your-token>'
+    'export VAULT_ADDR=<your-vault-url>'
+    "
+    return
+  end
+
+  set -l vault_cred_path $argv[1]
+
+  set -l vault_cred_content (VAULT_FORMAT=json vault read $vault_cred_path)
+
+  set -l conditional_key "if .data.data? == null then .data else .data.data end"
+
+  set -l vault_cred_prop (echo $vault_cred_content | jq {$conditional_key}'| keys | .[]' | fzf --multi)
+
+  if test -n (echo $vault_cred_prop)
+    set vault_cred_prop (echo $vault_cred_prop | sed 's/[[:blank:]]/,/g')
+  end
+
+  echo $vault_cred_content | jq {$conditional_key}' | with_entries(select(.key | IN('{$vault_cred_prop}')))'
 end

@@ -34,4 +34,6 @@ with pkgs;
   fzf
   bat
   difftastic
+  tmux
+  nodePackages.typescript-language-server
 ]

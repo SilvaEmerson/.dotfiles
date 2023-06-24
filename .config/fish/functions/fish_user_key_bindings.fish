@@ -162,3 +162,35 @@ function gvs -d "Get Vault Secret"
 
   echo $vault_cred_content | jq {$conditional_key}' | with_entries(select(.key | IN('{$vault_cred_prop}')))'
 end
+
+function zoterof -d "Find papers in Zotero lib"
+  if test -z $ZOTERO_DB_ADDR
+    echo "
+    Make sure to set your Zotero sqlite db path env var.
+    'export ZOTERO_DB_ADDR=<file-path>'
+    "
+    return
+  end
+
+  set -l rows (sqlite3 -json $ZOTERO_DB_ADDR "with title_id as (
+                                select fieldID
+                                from fields
+                                where fieldName LIKE 'title'
+                                )
+                                select itDV.value, it.key
+                                from itemData itD
+                                join itemDataValues itDV on itDV.valueID = itD.valueID
+                                join items it on it.itemID = itD.itemID
+                                where itD.fieldID = (select * from title_id)
+                                and itDV.value LIKE '%.pdf';")
+
+  set -l papers (echo $rows | jq .[].value | fzf --multi)
+
+  if test -n (echo $papers)
+    set papers (echo $papers | string split '" "' | string join '","')
+  end
+
+  echo $papers
+  echo $rows | jq 'map(select(.value | IN('{$papers}')))'
+end
+

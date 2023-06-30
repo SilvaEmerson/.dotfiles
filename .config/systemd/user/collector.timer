@@ -1,0 +1,10 @@
+[Unit]
+Description=Collector timer
+Requires=collector.service
+
+[Timer]
+Unit=collector.service
+OnCalendar=*-*-* *:*:0/30
+
+[Install]
+WantedBy=timers.target

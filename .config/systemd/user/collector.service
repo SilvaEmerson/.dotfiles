@@ -1,0 +1,10 @@
+[Unit]
+Description=Logs system statistics to the systemd journal
+Wants=collector.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/free
+
+[Install]
+WantedBy=multi-user.target

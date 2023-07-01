@@ -27,7 +27,7 @@ function zoterof() {
     PAPERS=$(echo $PAPERS | sed -e 's/" "/","/g')
   fi
 
-  JQ_ROWS_FILTER='map(select(.value | IN('$DEMO')))'
+  JQ_ROWS_FILTER='map(select(.value | IN('$PAPERS')))'
 
   echo $ROWS | jq "$JQ_ROWS_FILTER" 
 

@@ -36,4 +36,5 @@ with pkgs;
   difftastic
   tmux
   nodePackages.typescript-language-server
+  starship
 ]

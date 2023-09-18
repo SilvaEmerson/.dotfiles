@@ -37,3 +37,5 @@ export FZF_CTRL_R_OPTS="
 export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 
 export FZF_TMUX=1
+
+starship init fish | source

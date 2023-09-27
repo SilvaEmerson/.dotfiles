@@ -1,0 +1,124 @@
+# espanso match file
+
+global_vars:
+  - name: projects_home
+    type: echo
+    params:
+      echo: "$HOME/projects"
+  - name: arkham_path 
+    type: echo 
+    depends_on: [projects_home]
+    params:
+      echo: "{{projects_home}}/arkham"
+  - name: arkham_branch
+    type: shell
+    depends_on: [arkham_path]
+    params:
+      cmd: 'cd {{arkham_path}} && echo "$(git branch --show-current)" | tr "[:lower:]" "[:upper:]"'
+
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  # Simple text replacement
+  - trigger: ":espanso"
+    replace: "Hi there!"
+
+  # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
+
+  # But matches can also be dynamic:
+
+  # Print the current date
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%d/%m/%Y"
+
+  # Print the output of a shell command
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo 'Hello from your shell'"
+
+  - trigger: ":ark_branch"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: 'cd {{arkham_path}} && echo "$(git branch --show-current)" | tr "[:lower:]" "[:upper:]"'
+
+  - trigger: "gits."
+    replace: "git status"
+
+  - trigger: "gita."
+    replace: "git add -p"
+
+  - trigger: "gitc."
+    replace: "git commit -m $|$"
+
+  - trigger: "gitp."
+    replace: "git push origin {{arkham_branch}}"
+
+  - trigger: ":codeb"
+    replace: "```$|$```"
+
+  - trigger: "`"
+    replace: "`$|$`"
+
+  - trigger: ',"'
+    replace: '“$|$”'
+
+  - trigger: ",'"
+    replace: '‘$|$’'
+
+  - trigger: "''"
+    replace: '’'
+
+  - trigger: ',n'
+    replace: '–'
+
+  - trigger: ',m'
+    replace: '—'
+
+  - trigger: '...'
+    replace: '…'
+
+  - trigger: '<<'
+    replace: '«'
+
+  - trigger: '>>'
+    replace: '»'
+
+  - trigger: '<-'
+    replace: '←'
+
+  - trigger: '->'
+    replace: '→'
+
+  - trigger: '<='
+    replace: '≤'
+
+  - trigger: '>='
+    replace: '≥'
+
+  - trigger: '/='
+    replace: '≠'
+
+  - trigger: ":meme_pr_pls"
+    image_path: "https://pbs.twimg.com/media/FzVPnvXXoAIDkap?format=jpg&name=small"
+
+  - trigger: ":meme_abel_surprise"
+    image_path: "https://pbs.twimg.com/media/Fy_tNUgX0AI9K8K?format=jpg&name=360x360"
+
+  # And much more! For more information, visit the docs: https://espanso.org/docs/

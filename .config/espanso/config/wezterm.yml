@@ -1,0 +1,6 @@
+filter_class: wezterm
+
+backend: Clipboard
+disable_x11_fast_inject: true
+paste_shortcut: "CTRL+SHIFT+V"
+

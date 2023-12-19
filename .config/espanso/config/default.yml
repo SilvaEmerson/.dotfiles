@@ -38,5 +38,8 @@
 # clipboard_threshold: 100
 
 # For a list of all the available options, visit the official docs at: https://espanso.org/docs/
-disable_x11_fast_inject: true
-paste_shortcut: "CTRL+SHIFT+V"
+# disable_x11_fast_inject: true
+# paste_shortcut: "CTRL+SHIFT+V"
+
+toggle_key: RIGHT_CTRL
+search_shortcut: ALT+SHIFT+SPACE

@@ -94,11 +94,11 @@ matches:
   - trigger: '...'
     replace: '…'
 
-  - trigger: '<<'
-    replace: '«'
-
-  - trigger: '>>'
-    replace: '»'
+  # - trigger: '<<'
+  #   replace: '«'
+  #
+  # - trigger: '>>'
+  #   replace: '»'
 
   - trigger: '<-'
     replace: '←'
@@ -114,6 +114,9 @@ matches:
 
   - trigger: '/='
     replace: '≠'
+
+  - trigger: ':up_til'
+    replace: '˜'
 
   - trigger: ":meme_pr_pls"
     image_path: "https://pbs.twimg.com/media/FzVPnvXXoAIDkap?format=jpg&name=small"

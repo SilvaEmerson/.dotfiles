@@ -7,34 +7,64 @@ let
 in
 with pkgs;
 [
-  curl
-  htop
-  tree
-  xclip
-  firefox
-  brave
-  nushell
-  fish
-  wasmer
-  wasmtime
-  postman
-  dbeaver
-  vault
+  Agda
+  anydesk
+  asdf-vm
+  audacity
   aws-vault
   awscli2
-  neovim
+  baobab
+  bat
+  borgbackup
+  brave
+  cbqn
+  coq
+  curl
+  dbeaver
+  delve
+  difftastic
+  dyalog
+  elan
   emacs
+  emote
+  espanso
+  firefox
+  fish
+  fzf
+  gnome
+  htop
+  idris2
+  j
+  jq
+  megasync
+  nasm
+  neovim
+  nethogs
+  nix
+  nodePackages.typescript-language-server
+  nushell
+  obsidian
+  picom
   podman
   podman-compose
-  asdf-vm
+  postman
+  qbittorrent
+  qemu
   redis
-  sqlc
-  delve
   ripgrep
-  fzf
-  bat
-  difftastic
-  tmux
-  nodePackages.typescript-language-server
+  sqlc
   starship
+  syncthing
+  tealdeer
+  tmux
+  tree
+  typescript
+  uiua
+  vault
+  vifm
+  wasmer
+  wasmtime
+  xclip
+  xournalpp
+  zotero
 ]

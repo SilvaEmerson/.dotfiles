@@ -42,7 +42,7 @@ with pkgs;
   nethogs
   nix
   nodePackages.typescript-language-server
-  nushell
+  nushellFull
   obsidian
   picom
   podman

@@ -1,0 +1,15 @@
+
+modmap:
+  - remap:
+      CapsLock:
+        held: LeftAlt
+        alone: CapsLock
+
+keymap:
+  - remap:
+      M-h: Left
+      M-j: Down
+      M-k: Up
+      M-l: Right
+      M-Shift-h: C-left
+      M-Shift-l: C-right

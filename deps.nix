@@ -4,6 +4,7 @@
 # `nix profile install -f deps.nix`
 let
   pkgs = import <nixpkgs> { };
+  borgmatic = import ./borgmatic;
 in
 with pkgs;
 [
@@ -67,4 +68,5 @@ with pkgs;
   xclip
   xournalpp
   zotero
+  borgmatic
 ]

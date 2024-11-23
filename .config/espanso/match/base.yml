@@ -73,8 +73,8 @@ matches:
   - trigger: ":codeb"
     replace: "```$|$```"
 
-  - trigger: "`"
-    replace: "`$|$`"
+  # - trigger: "`"
+  #   replace: "`$|$`"
 
   - trigger: ',"'
     replace: '“$|$”'
@@ -91,8 +91,8 @@ matches:
   - trigger: ',m'
     replace: '—'
 
-  - trigger: '...'
-    replace: '…'
+  # - trigger: '...'
+  #   replace: '…'
 
   # - trigger: '<<'
   #   replace: '«'
@@ -100,20 +100,20 @@ matches:
   # - trigger: '>>'
   #   replace: '»'
 
-  - trigger: '<-'
-    replace: '←'
+  # - trigger: '<-'
+  #   replace: '←'
 
   # - trigger: '->'
   #   replace: '→'
 
-  - trigger: '<='
-    replace: '≤'
-
-  - trigger: '>='
-    replace: '≥'
-
-  - trigger: '/='
-    replace: '≠'
+  # - trigger: '<='
+  #   replace: '≤'
+  #
+  # - trigger: '>='
+  #   replace: '≥'
+  #
+  # - trigger: '/='
+  #   replace: '≠'
 
   - trigger: ':up_til'
     replace: '˜'

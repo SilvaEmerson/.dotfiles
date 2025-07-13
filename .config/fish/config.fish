@@ -3,7 +3,7 @@ fzf_key_bindings
 
 source $HOME/.nix-profile/share/asdf-vm/asdf.fish
 
-kubectl completion fish | source
+# kubectl completion fish | source
 
 # aliases
 alias docker-clean-dangling-images='docker rmi -f (docker images -f "dangling=true" -aq)'
@@ -12,8 +12,8 @@ alias docker-clean-dangling-images='docker rmi -f (docker images -f "dangling=tr
 export DOCKER_BUILDKIT=1 
 export COMPOSE_DOCKER_CLI_BUILD=1
 export EDITOR=vim
-export DISPLAY=(ip route list default | awk '{print $3}'):0
-export LIBGL_ALWAYS_INDIRECT=1
+# export DISPLAY=(ip route list default | awk '{print $3}'):0
+# export LIBGL_ALWAYS_INDIRECT=1
 export GPG_TTY=(tty)
 
 # path

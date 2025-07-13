@@ -142,8 +142,8 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 # start with system 
 exec_always feh --bg-scale ~/Pictures/904233.png 
-exec_always ~/.screenlayout/only_monitor.sh
-exec_always start_conky_maia
+# exec_always ~/.screenlayout/only_monitor.sh
+# exec_always start_conky_maia
 #exec_always compton -f 
 
 # reload the configuration file
@@ -165,8 +165,8 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 hide_edge_borders both
 
 # fix Origin blank page
-for_window [instance="origin.exe"] floating enable
-for_window [instance="Gw2.exe"] floating enable
+# for_window [instance="origin.exe"] floating enable
+# for_window [instance="Gw2.exe"] floating enable
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -235,7 +235,7 @@ bindsym Ctrl+Shift+Print exec scrot --count --delay 0.5 --quality 80 --silent $s
 bindsym $mod+I exec escrotum --select --selection-delay 300 $screenshot_file && notify-send "done"
 bindsym $mod+Shift+I exec escrotum --clipboard --select --selection-delay 2000 $screenshot_file && notify-send "copied"
 
-gaps inner 8
+# gaps inner 8
 
 #smart_gaps on 
 new_window none 

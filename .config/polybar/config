@@ -1,7 +1,7 @@
 [bar/top]
 bottom = false
 width = 100%
-height = 27
+height = 20
 
 background = #1f1f1f
 foreground = #eee
@@ -25,25 +25,17 @@ separator = |
 ;font-2 = Misc\ Termsynu:size=10;-2
 ;font-3 = FontAwesome:size=9;0
 
-font-0 = NotoSans-Regular:size=9;0
-font-1 = Material\ Icons:size=11;2
-font-2 = xos4\ Terminus:size=14;0
+font-0 = JetBrainsMono Nerd Font:size=8;0
+; font-0 = NotoSans-Regular:size=9;0
 font-3 = Siji:pixelsize=11;1
 font-4 = FontAwesome:size=11;0
 
 
-modules-left = mpd i3 
-modules-right = filesystem backlight xkeyboard volume  consumation  battery date        
+modules-left = i3 
+modules-right = filesystem volume date        
 
 wm-restack = i3
 
-tray-position = right 
-tray-scale = 1.0
-tray-transparent = true
-tray-background = ${self.background}
-tray-maxsize = 64
-
-tray-offset-y = 0
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -56,7 +48,7 @@ underline-color = ${self.background}
 [bar/bottom]
 bottom = true
 width = 100%
-height = 27
+height = 20
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -71,11 +63,17 @@ padding-right = 0
 module-margin-left = 3
 module-margin-right = 3
 
+tray-position = right 
+tray-scale = 1.0
+tray-transparent = true
+tray-background = ${bar/top.background}
+tray-maxsize = 64
+
+tray-offset-y = 0
+
 separator = |
-;font-0 = NotoSans-Regular:size=10;0
-font-0 = NotoSans-Regular:size=9;0
-font-1 = Material\ Icons:size=11;2
-font-2 = xos4\ Terminus:size=14;0
+font-0 = JetBrainsMono Nerd Font:size=8;0
+; font-0 = NotoSans-Regular:size=9;0
 font-3 = Siji:pixelsize=11;1
 font-4 = FontAwesome:size=11;0
 
@@ -127,12 +125,12 @@ ramp-capacity-0 = 
 ramp-capacity-0-foreground = #f53c3c
 ramp-capacity-1 = 
 ramp-capacity-1-foreground = #ffa900
-ramp-capacity-2 = 
-echo - | awk "{printf \"%.1f\",                     
-$((                                                                                                                 
-  $(cat /sys/class/power_supply/BAT1/current_now) * 
-  $(cat /sys/class/power_supply/BAT1/voltage_now) 
-)) / 1000000000000 }" ; echo " W"
+; ramp-capacity-2 = 
+; echo - | awk "{printf \"%.1f\",                     
+; $((                                                                                                                 
+;   $(cat /sys/class/power_supply/BAT1/current_now) * 
+;   $(cat /sys/class/power_supply/BAT1/voltage_now) 
+; )) / 1000000000000 }" ; echo " W"
 ramp-capacity-3 = 
 ramp-capacity-4 = 
 
@@ -245,12 +243,12 @@ ramp-coreload-4-foreground = #fba922
 ramp-coreload-5 = ▆
 ramp-coreload-5-font = 2
 ramp-coreload-5-foreground = #fba922
-ramp-coreload-6 = ▇
-ramp-coreload-6-font = 2
-ramp-coreload-6-foreground = #ff5555
-ramp-coreload-7 = █
-ramp-coreload-7-font = 2
-ramp-coreload-7-foreground = #ff5555
+; ramp-coreload-6 = ▇
+; ramp-coreload-6-font = 2
+; ramp-coreload-6-foreground = #ff5555
+; ramp-coreload-7 = █
+; ramp-coreload-7-font = 2
+; ramp-coreload-7-foreground = #ff5555
 
 [module/date]
 type = internal/date
@@ -305,7 +303,7 @@ bar-progress-empty-foreground = #44
 
 [module/wireless-network]
 type = internal/network
-interface = wlp2s0
+interface = wlp9s0f3u4
 interval = 1.0
 ping-interval = 10
 
@@ -333,7 +331,7 @@ animation-packetloss-framerate = 500
 type = internal/volume
 ;speaker-mixer = Speaker
 ;headphone-mixer = Headphone
-:headphone-id = 9
+; :headphone-id = 9
 
 format-volume =     <ramp-volume> <label-volume>
 label-muted =   muted
@@ -360,7 +358,7 @@ label-unmounted-foreground = #66
 [module/powermenu]
 type = custom/menu
 
-format-padding = 5
+format-padding = 2
 
 label-open =  
 label-close =  

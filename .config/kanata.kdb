@@ -1,0 +1,95 @@
+(defcfg
+  linux-dev /dev/input/by-id/usb-SINO_WEALTH_Gaming_KB-event-kbd
+  danger-enable-cmd yes
+  concurrent-tap-hold yes
+)
+
+(deflocalkeys-linux
+  ´ 26
+  [ 27
+  ç 39
+  ~ 40
+  ' 41
+  ] 43
+  ; 53
+  \ 86
+  / 89
+)
+
+(defsrc ;; brazillian-abnt2
+  esc  f1    f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  '    1     2    3    4    5    6    7    8    9    0    -    =   bspc
+  tab  q     w    e    r    t    y    u    i    o    p    ´    [   ret
+  caps a     s    d    f    g    h    j    k    l    ç    ~    ]
+  lsft \     z    x    c    v    b    n    m    ,    .    ;    /   rsft
+  lctl lmeta  lalt           spc            ralt                    rctl
+)
+
+(deflayer qwerty
+  esc  f1    f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  '    1     2    3    4    5    6    7    8    9    0    -    =   bspc
+  tab  q     w    e    r    t    y    u    i    o    @programs    ´    [   ret
+  @sym a     s    d    f    g    h    j    k    l    ç    ~    ]
+  lsft \     z    x    @ccopy    @vimnav    b    n    m    ,    .    ;    /   rsft
+  lctl lmeta  lalt           spc            ralt                    rctl
+)
+
+(deflayer vimnav
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _     _    _    _    _    _    _    _    _    _    _    _   _
+  _    _     C-rght    _    _    _    _    _    _    _    _    _    _   _
+  _    _     _    _    _    _    lft   down     up    rght    _    _    _
+  _    _     _    _    _    C-lft    _    _    _    _    _    _    _   _
+  _    _     _                _                _                        _
+)
+
+(deflayer symbols
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _     _    _    _    _    _    _    _    _    _    _    _   _
+  _    S-1   S-2  S-3  S-4  S-5   S-6    S-7    S-8    S-9    S-0    _    _   _
+  _    _     _    del   _   _    lft   down     up    rght   _    _   _
+  _    _     _    _    _    _    _    _    _    _    _    _    _   _
+  _    _     _                _                _                        _
+)
+
+(deflayer programsl
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    @zn @thndrbrd @ztr @obsdn @clbr @chrry _    _    _    _    _    _   _
+  _    _     _    _    _    _    _    _    _    _    _    _    _   _
+  _    _     _    _    _    _    _   _     _    _    _    _    _
+  _    _     _    _    _    _    _    _    _    _    _    _    _   _
+  _    _     _                _                _                        _
+)
+
+(defalias
+    ;; shifted keys
+    { S-[
+    } S-]
+    : S-;
+
+    ;; alias numbers as themselves for use in macro
+    8 8
+    0 0
+
+    ;; hybrctl (tap-hold-press 200 200 esc lctl)
+    vimnav  (tap-hold 100 200 v (layer-toggle vimnav))
+    ;; lch (tap-hold 200 200 h (macro h t t p @: / / l o c a l h o s t @: @8 @0 @8 @0))
+    sym (tap-hold 200 200 caps (layer-toggle symbols))
+    ccopy (tap-hold 200 200 c C-c)
+    vcopy (tap-hold 200 200 v C-v)
+
+    ;; Programs
+    programs (tap-hold 300 400 p (layer-toggle programsl))
+    zn (cmd rofi -show run -filter "zen-browser")
+    ztr (cmd rofi -show run -filter "zotero")
+    obsdn (cmd rofi -show run -filter "obsidian")
+    clbr (cmd rofi -show run -filter "calibre")
+    chrry (cmd rofi -show run -filter "cherry-studio")
+    thndrbrd (cmd rofi -show run -filter "thunderbird")
+)
+
+(defchordsv2
+  (a s d) (macro h e l l o) 250 first-release ()
+  (s d f) (macro b y e)     400 first-release ()
+)
+

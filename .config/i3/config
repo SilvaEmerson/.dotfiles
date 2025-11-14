@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:FontAwsome 12
+font pango:JetBrainsMono Nerd Font 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -30,7 +30,7 @@ font pango:FontAwsome 12
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec deepin-terminal
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -42,7 +42,6 @@ bindsym $mod+Shift+q kill
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-bindsym $mod+shift+a exec deepin-screenshot
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -141,7 +140,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 # start with system 
-exec_always feh --bg-scale ~/Pictures/904233.png 
+# exec_always feh --bg-scale ~/Pictures/904233.png 
 # exec_always ~/.screenlayout/only_monitor.sh
 # exec_always start_conky_maia
 #exec_always compton -f 
@@ -151,7 +150,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -p bottom -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # window colors
 #                       border              background         text                 indicator
@@ -225,13 +224,7 @@ bindsym XF86AudioPause exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous 
 
-# Print screen
-set $screenshot_file '/home/nemo/Desktop/Screenshots/%Y-%m-%d_%H-%M-%S-$wx$h.png'
-bindsym Print exec escrotum --select --selection-delay 100 $screenshot_file && notify-send "done"
-bindsym Shift+Print exec escrotum --clipboard --select --selection-delay 100 $screenshot_file && notify-send "copied"
-bindsym Ctrl+Print exec scrot --focused --count --delay 0.5 --quality 80 --silent $screenshot_file && notify-send "done"
-bindsym Ctrl+Shift+Print exec scrot --count --delay 0.5 --quality 80 --silent $screenshot_file && notify-send "done"
-
+bindsym $mod+Shift+s exec flameshot gui
 bindsym $mod+I exec escrotum --select --selection-delay 300 $screenshot_file && notify-send "done"
 bindsym $mod+Shift+I exec escrotum --clipboard --select --selection-delay 2000 $screenshot_file && notify-send "copied"
 

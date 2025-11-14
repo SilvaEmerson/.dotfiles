@@ -1,0 +1,18 @@
+#:schema https://jj-vcs.github.io/jj/latest/config-schema.json
+
+[user]
+name = "SilvaEmerson"
+email = "emersonjose877@gmail.com"
+
+[signing]
+behavior = "own"
+backend = "gpg"
+key = "2BEB81B80AF5C20B"
+
+[template-aliases]
+'show_sig' = '''
+self.description() ++ self.signature().display()
+'''
+
+[git]
+push-new-bookmarks = true

@@ -15,6 +15,7 @@ export EDITOR=nvim
 export GIT_EXTERNAL_DIFF=difft
 export FZF_TMUX=1
 export JAVA_HOME=/mnt/EJS/graalvm-jdk-25+37.1
+export GRADLE_USER_HOME=/mnt/EJS/Projects/Gradle
 
 # path
 export PATH="$PATH:$HOME/.local/bin"

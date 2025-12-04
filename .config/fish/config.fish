@@ -1,5 +1,8 @@
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
+set -p fish_complete_path $(brew --prefix)/share/fish/vendor_completions.d
+
+fish_config theme choose "Solarized Light"
 fish_vi_key_bindings
 
 # aliases

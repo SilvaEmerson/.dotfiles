@@ -16,3 +16,10 @@ self.description() ++ self.signature().display()
 
 [git]
 push-new-bookmarks = true
+
+[aliases]
+
+gf = ["git", "fetch", "--all-remotes"]
+gp = ["git", "push"]
+gi = ["git", "init", "--colocate"]
+

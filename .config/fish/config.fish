@@ -29,3 +29,4 @@ end
 kubectl completion fish | source
 mise activate fish | source
 starship init fish | source
+zoxide init fish | source

@@ -1,0 +1,20 @@
+source_directories:
+  - /mnt/WIN/Users/PICHAU/Meus Documentos/MEGAsync
+
+exclude_patterns:
+  - /mnt/WIN/Users/PICHAU/Meus Documentos/MEGAsync/Academic Collection
+  - /mnt/WIN/Users/PICHAU/Meus Documentos/MEGAsync/Rubbish
+
+repositories:
+  - path: /mnt/EXTERNAL/Megasync
+    label: external_megasync
+  - path: /mnt/EJS/Library/Megasync
+    label: ejs_megasync
+
+
+keep_daily: 1
+keep_weekly: 7
+keep_monthly: 1
+
+compression: zstd,22
+

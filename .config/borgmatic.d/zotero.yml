@@ -1,0 +1,16 @@
+source_directories:
+  - /mnt/WIN/Users/PICHAU/Meus Documentos/MEGAsync/Academic Collection
+
+repositories:
+  - path: /mnt/EXTERNAL/ZoteroLib
+    label: external_zotero
+  - path: /mnt/EJS/Library/Zotero
+    label: ejs_zotero
+
+
+keep_daily: 1
+keep_weekly: 7
+keep_monthly: 1
+
+compression: zstd,22
+

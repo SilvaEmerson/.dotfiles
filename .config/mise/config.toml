@@ -1,0 +1,27 @@
+[tools]
+biome = "latest"
+crystal = "latest"
+dotnet = "latest"
+haskell = "latest"
+helm = "latest"
+julia = "latest"
+k3d = "latest"
+kind = "latest"
+lima = "latest"
+maven = "3.9.12"
+minikube = "latest"
+nim = "latest"
+node = "latest"
+odin = "latest"
+opencode = "latest"
+podman = { version = "latest", bin = "podman" }
+racket = "latest"
+raku = "latest"
+rust = "latest"
+swiprolog = "latest"
+uv = "latest"
+v = "latest"
+zig = "latest"
+
+[env]
+MISE_DISABLE_TOOLS = "python"

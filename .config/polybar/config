@@ -303,7 +303,7 @@ bar-progress-empty-foreground = #44
 
 [module/wireless-network]
 type = internal/network
-interface = wlp9s0f3u4
+interface = wlp9s0f3u1
 interval = 1.0
 ping-interval = 10
 

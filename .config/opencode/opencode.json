@@ -1,0 +1,54 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "explore": {
+      "disable": false
+    },
+    "general": {
+      "disable": false
+    }
+  },
+  "mcp": {
+    "calibre": {
+      "command": [
+        "uvx",
+        "run",
+        "calibre_mcp_server"
+      ],
+      "enabled": false,
+      "environment": {
+        "CALIBRE_LIBRARY_PATH": "${env:CALIBRE_LIBRARY_PATH}"
+      },
+      "type": "local"
+    },
+    "drawio": {
+      "command": [
+        "drawio-mcp"
+      ],
+      "enabled": false,
+      "type": "local"
+    }
+  },
+  "plugin": [
+    "@plannotator/opencode@latest"
+  ],
+  "provider": {
+    "ollama": {
+      "models": {
+        "qwen3.5:0.8b": {
+          "_launch": true,
+          "name": "qwen3.5:0.8b"
+        },
+        "qwen3.5:4b": {
+          "_launch": true,
+          "name": "qwen3.5:4b"
+        }
+      },
+      "name": "Ollama",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:11434/v1"
+      }
+    }
+  }
+}

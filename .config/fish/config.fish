@@ -7,6 +7,7 @@ fish_vi_key_bindings
 
 # aliases
 alias docker-clean-dangling-images='docker rmi -f (docker images -f "dangling=true" -aq)'
+alias oc='opencode'
 
 export MISE_DATA_DIR="/mnt/EJS/MiseData"
 export ELAN_HOME="/mnt/EJS/Lean4Data"

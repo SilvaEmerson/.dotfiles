@@ -1,4 +1,7 @@
 #:schema https://jj-vcs.github.io/jj/latest/config-schema.json
+[ui]
+merge-editor = "meld"
+default-command = ["log", "-n", "10"]
 
 [user]
 name = "SilvaEmerson"
@@ -14,12 +17,22 @@ key = "2BEB81B80AF5C20B"
 self.description() ++ self.signature().display()
 '''
 
+[revset-aliases]
+'mybookmarks' = "mine() & bookmarks()"
+
 [git]
 push-new-bookmarks = true
 
 [aliases]
-
 gf = ["git", "fetch", "--all-remotes"]
 gp = ["git", "push"]
 gi = ["git", "init", "--colocate"]
+bm = ["bookmark", "move", "--allow-backwards"]
+r = ["rebase"]
+merge = ["bash", "-c", "jj new \"$1\" \"$2\" -m \"Merge branch '$2' into $1\""]
 
+[remotes.origin]
+auto-track-bookmarks = "glob:*"
+
+[remotes.codeberg]
+auto-track-bookmarks = "glob:*"

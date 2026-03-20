@@ -6,15 +6,26 @@
     },
     "general": {
       "disable": false
+    },
+    "plan": {
+      "model": "github-copilot/claude-sonnet-4.5"
+    },
+    "build": {
+      "model": "github-copilot/gpt-5.3-codex",
+      "permission": {
+        "bash": {
+          "git push*": "ask",
+          "rm -rf*": "ask",
+          "npm install*": "allow",
+          "git *": "allow",
+          "*": "allow"
+        }
+      }
     }
   },
   "mcp": {
     "calibre": {
-      "command": [
-        "uvx",
-        "run",
-        "calibre_mcp_server"
-      ],
+      "command": ["uvx", "run", "calibre_mcp_server"],
       "enabled": false,
       "environment": {
         "CALIBRE_LIBRARY_PATH": "${env:CALIBRE_LIBRARY_PATH}"
@@ -22,16 +33,17 @@
       "type": "local"
     },
     "drawio": {
-      "command": [
-        "drawio-mcp"
-      ],
+      "command": ["drawio-mcp"],
       "enabled": false,
       "type": "local"
+    },
+    "excalidraw": {
+      "type": "remote",
+      "url": "https://mcp.excalidraw.com/mcp",
+      "enabled": false
     }
   },
-  "plugin": [
-    "@plannotator/opencode@latest"
-  ],
+  "plugin": ["@plannotator/opencode@latest"],
   "provider": {
     "ollama": {
       "models": {

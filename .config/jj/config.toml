@@ -29,7 +29,7 @@ gp = ["git", "push"]
 gi = ["git", "init", "--colocate"]
 bm = ["bookmark", "move", "--allow-backwards"]
 r = ["rebase"]
-merge = ["bash", "-c", "jj new \"$1\" \"$2\" -m \"Merge branch '$2' into $1\""]
+merge = ["util", "exec", "--", "bash", "-c", "jj new \"$1\" \"$2\" -m \"Merge branch '$2' into $1\"", ""]
 
 [remotes.origin]
 auto-track-bookmarks = "glob:*"

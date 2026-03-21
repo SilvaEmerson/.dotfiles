@@ -1,0 +1,24 @@
+[metadata]
+name = "jj-bookmarks"
+description = "List and checkout Jujutsu bookmarks"
+requirements = ["jj"]
+
+[source]
+command = "jj bookmark list --all-remotes --template 'if(self.remote(), self.name() ++ \"@\" ++ self.remote(), self.name()) ++ \"\\n\"'"
+
+[preview]
+command = "jj show -r '{}' --color=always"
+
+[keybindings]
+enter = "actions:checkout"
+ctrl-d = "actions:delete"
+
+[actions.checkout]
+description = "Checkout the selected bookmark"
+command = "jj new '{}'"
+mode = "execute"
+
+[actions.delete]
+description = "Delete the selected bookmark"
+command = "jj bookmark delete '{}'"
+mode = "execute"

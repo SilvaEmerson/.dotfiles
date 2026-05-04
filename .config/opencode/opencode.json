@@ -8,7 +8,15 @@
       "disable": false
     },
     "plan": {
-      "model": "github-copilot/claude-sonnet-4.5"
+      "model": "github-copilot/claude-sonnet-4.5",
+      "permission": {
+        "read": {
+          "/tmp/*": "allow",
+          "/*": "allow"
+        },
+        "write": {
+          "/tmp/*": "allow"
+        }
     },
     "build": {
       "model": "github-copilot/gpt-5.3-codex",

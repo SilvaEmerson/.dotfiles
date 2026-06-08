@@ -1,255 +1,349 @@
 ---
 name: quint
-description: Skill for writing, reviewing, and explaining Quint specifications, particularly focused on actions, temporal properties, and typing.
+description: Expert in Quint formal specification language, simulator, model checking, and current CLI/docs behavior. Use for `.qnt` specs, Quint syntax, built-ins, `quint run|test|verify|repl|compile`, Apalache/TLC backends, invariants, temporal properties, and debugging Quint errors.
 ---
 
-# Quint Language Skill
+# Quint Skill
 
-Use this skill when you need to **write, review, or explain Quint specifications**, especially around **actions, temporal properties, and typing**.
+Use this skill for Quint language work, CLI usage, spec authoring, simulation, testing, REPL, and model checking.
 
-## Quick Start Template
+## Source of truth
 
-```quint
-module Spec {
-  // Constants & state
-  const N: int
-  var x: int
+Prefer current docs over memory:
 
-  // Stateless operators
-  pure def clamp(v, lo, hi) =
-    if (v < lo) lo else if (v > hi) hi else v
+- Language manual: `https://quint-lang.org/docs/lang`
+- CLI manual: `https://quint-lang.org/docs/quint`
+- Built-ins: `https://quint-lang.org/docs/builtin`
+- Repo/changelog: `https://github.com/informalsystems/quint`
 
-  // Initial state
-  action init = x' = 0
+Recent docs/changelog checked: through `v0.32.0` and docs updated June 2026.
 
-  // Next-state relation
-  action step = x' = x + 1
+## Version-sensitive guidance
 
-  // System behavior
-  temporal spec = init.then(always(step))
+Do not assume older Quint behavior. Important recent changes:
 
-  // Safety property
-  temporal invariant = always(x >= 0)
-}
+- `quint run` and `quint test` default backend is now `rust` since `v0.31.0`.
+- Rust backend supports `test`, `repl`, `--seed`, `--n-traces`, `--witnesses`, `--mbt`, `--invariants`.
+- Rust backend uses `i64` integers only. TypeScript backend still supports BigInts.
+- `quint verify` supports `--backend=tlc` since `v0.31.0`.
+- `leadsTo` temporal operator added in `v0.32.0`.
+- Simple tuple/record destructuring added in `v0.30.0`.
+- `case` is removed from current language docs. Prefer `if` / `else if` / `else` or `match` for sum types.
+- `oneOf()` now handles empty sets differently than older guides implied; simulator behavior changed across recent releases. Do not promise older seed behavior matches newer versions.
+- `--out-itf` no longer suppresses console output; `--verbosity` controls output.
+- `run`/`verify` can take multiple invariants with `--invariants`.
+- `q::debug` supports one-argument form.
+- `apalache::generate` exists.
+- Keywords `from`, `as`, `List`, `Set` can be identifiers.
+
+If user asks for exact flag behavior, backend support, or semantics around recent releases, verify against docs/changelog first.
+
+## Working style
+
+When helping with Quint:
+
+- Prefer minimal, executable specs.
+- Keep examples current with present docs.
+- Distinguish clearly between language semantics and backend/tool limitations.
+- Say when a feature is backend-specific: TypeScript vs Rust vs Apalache vs TLC.
+- For verification advice, prefer finite domains unless user explicitly wants symbolic/infinite reasoning.
+
+## Current CLI guidance
+
+### Install
+
+```bash
+npm i -g @informalsystems/quint
 ```
 
----
+### Main commands
 
-## Core Language Concepts
+- `quint repl`
+- `quint compile`
+- `quint parse`
+- `quint typecheck`
+- `quint run`
+- `quint test`
+- `quint verify`
+- `quint docs`
 
-### Modules & Declarations
-- `module Name { ... }`
-- `const` — constant (stateless, typed)
-- `var` — state variable (typed)
-- `pure val / pure def` — **stateless** operators
-- `val / def` — **stateful** operators
-- `action` — action-mode definition (uses primed vars)
-- `temporal` — temporal formulas
-- `assume` — constraints on constants
-- `import` / `export`
+### Backend guidance
 
-### Modes (Expression Levels)
-Quint separates expressions by **mode** (increasing power):
-1. **Stateless** — no state access
-2. **State** — can read `var`s
-3. **Non‑determinism** — uses `oneOf`
-4. **Action** — next‑state assignments `x' = e`
-5. **Run** — sequences of actions
-6. **Temporal** — temporal logic formulas
+- `run` / `test`: default `rust`
+- `repl`: docs still show default `typescript`; explicit `--backend=rust` supported
+- `verify`: `apalache` default, `tlc` alternative
 
-**Rule:** don’t mix modes incorrectly (e.g., action inside temporal directly).
+### When to choose each backend
 
----
+- Use Rust backend for speed on simulation/tests with ordinary integer ranges fitting `i64`.
+- Use TypeScript backend when spec relies on huge integers beyond signed 64-bit range.
+- Use Apalache for symbolic bounded model checking.
+- Use TLC for explicit-state finite models.
 
-## Types
+### High-value flags
 
-Basic: `bool`, `int`, `str`
+`quint run`:
 
-Complex:
-- `Set[T]`, `List[T]`, `(T1, T2, ...)` tuples
-- `{ field: T, ... }` records
-- `T1 -> T2` functions
-- `(T1, ..., Tn) => R` operator type
-- Sum types:
+- `--init`, `--step`
+- `--invariant` and `--invariants`
+- `--seed`
+- `--max-steps`, `--max-samples`
+- `--n-traces`
+- `--witnesses`
+- `--hide`
+- `--mbt`
+- `--out-itf`
+- `--backend=rust|typescript`
+
+`quint test`:
+
+- `--match`
+- `--seed`
+- `--max-samples`
+- `--backend=rust|typescript`
+
+`quint verify`:
+
+- `--backend=apalache|tlc`
+- `--init`, `--step`
+- `--invariant`, `--invariants`
+- `--inductive-invariant`
+- `--temporal`
+- `--max-steps`
+- `--out-itf` (Apalache only)
+- `--random-transitions` (Apalache only)
+- `--apalache-config`
+- `--tlc-config`
+
+### Current caveats
+
+- TLC cannot handle infinite domains.
+- Apalache checks bounded behaviors; choose `--max-steps` consciously.
+- Rust integer overflow matters. If user models huge counters/crypto-sized ints, recommend TypeScript backend for simulation/testing.
+- Seeds can change behavior across Quint versions because simulator internals changed; promise reproducibility only within same tool version/backend.
+
+## Language guidance
+
+### Modes
+
+Current docs recognize these modes:
+
+- Stateless
+- State
+- Non-determinism
+- Run
+- Action
+- Temporal
+
+Do not blur action formulas and temporal formulas.
+
+### Core module constructs
+
+- `const`
+- `assume`
+- `var`
+- `pure val` / `pure def`
+- `val` / `def`
+- `action`
+- `run`
+- `temporal`
+- `type`
+- `import`
+- `export`
+
+### Current syntax notes
+
+- Lists are 0-indexed.
+- Empty tuple `()` is valid and canonical unit type.
+- Tuple and record destructuring is supported in simple forms.
+- Trailing commas in parameter lists/operator calls are accepted.
+- Multiple top-level modules per file are allowed; nested modules are not.
+- Shadowing in nested scopes is allowed.
+- No recursive operators.
+
+### Removed or misleading older syntax
+
+Do not teach these as current Quint:
+
+- `case` as normal user-facing flow control. Current docs mark it removed.
+- `unchanged` operator. Current docs mark it removed; use `orKeep` / `mustChange` patterns.
+- `repeated`; use `reps`.
+- `notin` builtin.
+
+### Preferred control-flow patterns
+
+Use `if (cond) a else b`:
 
 ```quint
-type Option[a] = Some(a) | None
+pure def sign(x: int): str =
+  if (x < 0) "neg" else if (x == 0) "zero" else "pos"
 ```
 
-**Constants and variables require type annotations.**
-
----
-
-## Literals & Comments
+Use `match` for sum types:
 
 ```quint
-true false
-0 1 100_000 0xFF
-"string"
-// line comment
-/* block comment */
+type Result = Ok(int) | Err(str)
+
+pure def unwrapOrZero(r: Result): int =
+  match r {
+    | Ok(n) => n
+    | Err(_) => 0
+  }
 ```
 
-Special sets: `Int`, `Nat`
+### Destructuring
 
----
+Simple destructuring is current:
 
-## Operators & Collections
+```quint
+val (a, b) = pair
+val { x, y } = point
+```
 
-### Boolean
-`not`, `and`, `or`, `iff`, `implies`, `==`, `!=`
+If destructuring gets complex or tool errors appear, fall back to explicit field/tuple access.
 
-### Arithmetic
-`+ - * / % ^` and comparisons `< <= > >=`
+## Built-ins worth knowing
 
 ### Sets
-```quint
-Set(1,2,3)
-S.union(T)      S.intersect(T)   S.exclude(T)
-S.contains(x)   x.in(S)
-S.map(x => e)   S.filter(x => p)
-S.forall(x => p)  S.exists(x => p)
-S.powerset()    S.size()
-oneOf(S)        // nondet choice (S must be nonempty)
-```
 
-### Lists (0‑indexed!)
-```quint
-[1,2,3]
-range(0, 3)       // [0,1,2]
-l.length()
-l[i] / l.nth(i)
-l.append(x)       l.concat(t)
-l.replaceAt(i,x)
-l.slice(start,end)
-l.foldl(init, (acc,v) => e)
-```
+- `Set(...)`
+- `exists`, `forall`
+- `contains`, `in`
+- `union`, `intersect`, `exclude`, `subseteq`
+- `filter`, `map`, `fold`
+- `powerset`, `flatten`
+- `allLists`, `allListsUpTo`
+- `chooseSome`, `oneOf`, `getOnlyElement`
+- `isFinite`, `size`
 
-### Maps / Functions
-```quint
-Map("a" -> 1, "b" -> 2)
-f.get(k)
-f.set(k, v)
-f.setBy(k, old => old + 1)
-S.mapBy(x => e)    // [x \in S |-> e]
-```
+### Lists
 
-### Records
-```quint
-{ a: 1, b: 2 }
-r.a
-r.with("a", 3)
-{ a: 1, ...r }
-```
+- `[ ... ]`
+- `append`, `concat`
+- `head`, `tail`, `length`, `nth`, `indices`
+- `replaceAt`, `slice`, `range`, `select`, `foldl`
 
-### Tuples
-```quint
-(1, "x")
-t._1  t._2
-tuples(S1, S2)
-```
+### Maps
 
-### Sum Types & Matching
-```quint
-type Elem = S(str) | I(int)
-match e {
-  | S(s) => s
-  | I(i) => "int"
-}
-```
+- `Map(...)`
+- `get`, `keys`
+- `mapBy`, `setToMap`, `setOfMaps`
+- `set`, `setBy`, `put`
 
----
+### Actions / runs
 
-## Control & Composition
+- `x' = e`
+- `assign`
+- `then`
+- `expect`
+- `reps`
+- `fail`
+- `assert`
 
-### Conditional
-```quint
-if (p) e1 else e2
-```
+Important current semantics:
 
-### Case (requires default)
-```quint
-case (
-  | p1 -> e1
-  | p2 -> e2
-  | _  -> e_default
-)
-```
+- `a.then(b)` reports error if `a` itself fails.
+- `a.expect(p)` fails if action fails or predicate false in resulting state.
 
-### Blocks
-```quint
-and { p1, p2, p3 }
-or  { p1, p2, p3 }
-all { a1, a2, a3 }
-any { a1, a2, a3 }
-```
+### Temporal
 
-### Lambdas
-```quint
-x => x * x
-(x, y) => x + y
-_ => 42
-```
+- `always`
+- `eventually`
+- `next`
+- `orKeep`
+- `mustChange`
+- `enabled`
+- `weakFair`
+- `strongFair`
+- `leadsTo`
 
----
+Use `leadsTo(p, q)` or infix style if available in context to express progress properties.
 
-## Actions & State Updates
+### Debug / generation
 
-- Next‑state assignment: `x' = e` (or `x.assign(e)`)
-- Each `var` is assigned **at most once per action**
-- Use `all { ... }` to combine multiple assignments/guards
+- `q::debug(msg, value)`
+- `q::debug(expr)`
+- `apalache::generate(n)`
+
+## Spec patterns
+
+### Minimal state machine
 
 ```quint
-action step = {
-  all {
+module Counter {
+  var x: int
+
+  action init = x' = 0
+
+  action step = any {
     x' = x + 1,
-    x' >= 0
+    x' = x,
   }
+
+  val inv = x >= 0
+  temporal live = eventually(x >= 3)
 }
 ```
 
----
-
-## Temporal Logic
+### Unit test
 
 ```quint
-always(p)       eventually(p)
-next(p)         p.until(q)
-p.releases(q)
-enabled(action)
-fairness(action)
+module CounterTest {
+  var x: int
+
+  run increments =
+    (x' = 0)
+      .then(x' = x + 1)
+      .expect(x == 1)
+}
 ```
 
-Other helpers:
-`p.orkeep(q)`, `p.mustChange(q)`
-
----
-
-## Imports & Namespaces
+### Fairness/property skeleton
 
 ```quint
-import Math.*
-import Voting(Value = Set(0,1)) as V
-V::Value
-export Math.*
+module FairCounter {
+  var x: int
+
+  action init = x' = 0
+  action step = any {
+    x' = x + 1,
+    x' = x,
+  }
+
+  temporal spec = init and always(step.orKeep(Set(x)))
+  temporal fair = step.weakFair(Set(x))
+  temporal progress = fair.implies(eventually(x >= 10))
+}
 ```
 
----
+## How to help users well
 
-## Common Pitfalls
+When user asks to write or debug Quint:
 
-1. **Lists are 0‑indexed** (unlike TLA+).
-2. **No recursion** — use `map`, `filter`, `fold`.
-3. **Case requires default** (`| _ -> ...`).
-4. **oneOf requires nonempty set**.
-5. **Mixing modes** (action vs temporal) is invalid.
-6. **Every var assigned at most once per action.**
+1. Check whether goal is simulation, tests, or model checking.
+2. Pick backend with current defaults/limits in mind.
+3. Keep domains finite if verification intended.
+4. Prefer `match` over any stale `case` examples.
+5. Mention integer-limit risk if Rust backend involved.
+6. If CLI output differs from older blog/tutorials, trust current docs/changelog.
 
----
+## Common corrections
 
-## When to Use This Skill
+If you see old guidance, correct it:
 
-- Writing Quint specs, actions, or temporal properties.
-- Translating TLA+ into Quint.
-- Checking typing and mode correctness.
-- Reviewing specs for safety/liveness mistakes.
+- `quint run` default backend is not always TypeScript anymore.
+- `quint verify` can use TLC now.
+- `case` examples are stale.
+- `leadsTo` now exists.
+- `--invariants` accepts multiple invariant names.
+- `--out-itf` no longer implies quiet console.
+- `q::debug` can take one argument.
+
+## References
+
+- Docs: `https://quint-lang.org/docs/`
+- Language: `https://quint-lang.org/docs/lang`
+- CLI: `https://quint-lang.org/docs/quint`
+- Built-ins: `https://quint-lang.org/docs/builtin`
+- Repo: `https://github.com/informalsystems/quint`
+- Examples: `https://github.com/informalsystems/quint/tree/main/examples`

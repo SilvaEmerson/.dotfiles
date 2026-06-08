@@ -151,6 +151,16 @@ Do not blur action formulas and temporal formulas.
 - `import`
 - `export`
 
+**`val` vs `def` for nullary operators:** Use `val` for nullary operators that read state variables (no parameters, not pure). Use `def` only when the operator takes parameters. A nullary `def` that reads state typechecks but is non-idiomatic.
+
+```quint
+// correct
+val MustHold = someStateVar > 0          // reads state, no params → val
+
+// non-idiomatic (typechecks but wrong kind)
+def MustHold = someStateVar > 0          // nullary def reading state → use val instead
+```
+
 ### Current syntax notes
 
 - Lists are 0-indexed.
@@ -204,6 +214,13 @@ If destructuring gets complex or tool errors appear, fall back to explicit field
 
 ## Built-ins worth knowing
 
+### Booleans
+
+- `and`, `or`, `not`, `iff`
+- `implies(p, q)` — equivalent to `not(p) or q`; also valid as infix `p implies q`
+
+`forall` over an empty set is vacuously true; use this to avoid redundant `size() == 0 or forall(...)` guards.
+
 ### Sets
 
 - `Set(...)`
@@ -222,6 +239,13 @@ If destructuring gets complex or tool errors appear, fall back to explicit field
 - `append`, `concat`
 - `head`, `tail`, `length`, `nth`, `indices`
 - `replaceAt`, `slice`, `range`, `select`, `foldl`
+
+**No `listToSet` builtin.** Convert list to set with `foldl`:
+
+```quint
+pure def toSet(l: List[a]): Set[a] =
+  l.foldl(Set(), (acc, x) => acc.union(Set(x)))
+```
 
 ### Maps
 

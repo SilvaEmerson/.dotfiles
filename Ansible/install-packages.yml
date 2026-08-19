@@ -1,0 +1,120 @@
+---
+- name: Install Homebrew and mise packages
+  hosts: all
+  become: false
+  vars:
+    whoami: "{{ ansible_facts['user_id'] }}"
+    brew_formulae:
+      - acl
+      - aichat
+      - attr
+      - atuin
+      - binutils
+      - brotli
+      - btop
+      - bubblewrap
+      - bzip2
+      - ca-certificates
+      - coreutils
+      - curl
+      - cyrus-sasl
+      - dbus
+      - elan-init
+      - expat
+      - gcc
+      - gmp
+      - gnu-typist
+      - gonzo
+      - htop
+      - isl
+      - jj
+      - keyutils
+      - krb5
+      - kubernetes-cli
+      - lazyjj
+      - libcap
+      - libedit
+      - libidn2
+      - libmpc
+      - libnghttp2
+      - libnghttp3
+      - libngtcp2
+      - libssh2
+      - libunistring
+      - libxcrypt
+      - lm-sensors
+      - lz4
+      - mise
+      - mpfr
+      - ncurses
+      - openldap
+      - openssl@3
+      - picat
+      - readline
+      - sqlite
+      - starship
+      - tealdeer
+      - teamtype
+      - usage
+      - util-linux
+      - xz
+      - zlib-ng-compat
+      - zstd
+      - zsync
+
+  tasks:
+    - name: Install Homebrew
+      become: true
+      ansible.builtin.shell:
+        cmd: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        creates: /home/linuxbrew/.linuxbrew/bin/brew
+
+    - name: Install brew formulae
+      community.general.homebrew:
+        name: "{{ brew_formulae }}"
+        state: present
+
+    - name: Create mise config dir
+      ansible.builtin.file:
+        path: ~/.config/mise
+        state: directory
+        owner: "{{ whoami }}"
+        mode: "0755"
+
+    - name: Copy mise config
+      ansible.builtin.copy:
+        src: files/mise/config.toml
+        dest: "~/.config/mise/config.toml"
+        owner: "{{ whoami }}"
+        mode: "0644"
+
+    - name: Install mise
+      ansible.builtin.shell:
+        cmd: curl https://mise.run | sh
+        creates: ~/.local/bin/mise
+
+    - name: Activate mise
+      ansible.builtin.lineinfile:
+        path: ~/.config/fish/config.fish
+        line: 'eval "$(~/.local/bin/mise activate fish)"'
+
+    - name: Add mise plugins
+      ansible.builtin.shell: source ~/.config/fish/config.fish && mise plugins add {{ item.name }} {{ item.url }}
+      changed_when: false
+      loop:
+        - name: raku
+          url: https://github.com/m-dango/asdf-raku.git
+        - name: nim
+          url: https://github.com/mise-plugins/mise-nim
+        - name: janet
+          url: https://github.com/Jakski/asdf-janet
+        - name: dmd
+          url: https://github.com/mise-plugins/mise-dmd
+        - name: cliamp
+          url: github:bjarneo/cliamp
+        - name: neovim
+          url: github:neovim/neovim
+        - name: engram
+          url: github:Gentleman-Programming/engram
+        - name: asciinema
+          url: https://github.com/asciinema/asciinema
